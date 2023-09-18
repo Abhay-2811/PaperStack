@@ -10,7 +10,7 @@ req:
 */ 
 const JobCard = (props) => {
   return (
-    <div className="flex flex-col item-center bg-gray-800 border border-gray-700 p-6 m-6 rounded-md w-4/5 right-3/4">
+    <div className="flex flex-col h-60 mb-10 item-center bg-gray-800 border border-gray-700 p-6 m-6 rounded-md w-4/5 right-3/4">
         <h1>BY: {props.by}</h1>
         <p>Id: {props.id}</p>
         <p>desc: {props.desc}</p>

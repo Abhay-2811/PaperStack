@@ -9,9 +9,9 @@ const Navbar = () => {
     <nav className='bg-gray-900 w-full z-20 top-0 left-0 border-b border-gray-600 sticky'>
       <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link href='/' className='flex items-center'>
-          <Image src='/bird-logo.jpg' width={40} height={40} alt='logo' />
+          <Image src='/logo.jpg' width={40} height={40} alt='logo' />
           <span className='self-center text-2xl font-semibold whitespace-nowrap text-white'>
-            Flowbite Link{' '}
+            PaperStack
           </span>
         </Link>
         <div className='flex md:order-2'>
@@ -55,7 +55,7 @@ const Navbar = () => {
             <li>
               <Link
                 href='/'
-                className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:text-blue-500'
+                className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500 active:text-blue-600'
                 aria-current='page'
               >
                 Home
@@ -67,6 +67,15 @@ const Navbar = () => {
                 className='block py-2 pl-3 pr-4 rounded  md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700'
               >
                 Jobs
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/create'
+                className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500'
+                aria-current='page'
+              >
+                Create Job
               </Link>
             </li>
           </ul>

@@ -32,7 +32,7 @@ export default async function Jobs () {
     const data = await getData()
     console.log(data)
   return (
-    <div className=''>
+    <div className=' ml-40 mt-20'>
       {data.map(value => (
         <div key={value}>{<JobCard id={value.id} desc={value.description} by={value.by} rpp={10} />}</div>
       ))}

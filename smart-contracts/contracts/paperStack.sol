@@ -4,6 +4,9 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+interface fvm_random{
+    function getRandom() view external returns(uint256[] memory);
+}
 
 contract PaperStack is Ownable{
 
@@ -81,6 +84,9 @@ contract PaperStack is Ownable{
         user.transfer( (1000000000000000000+((totalReward/numPages)*userPages)));
     }
 
+    function getData() view public returns(uint256[] memory){
+        return fvm_random(0xA9aB19aDd1f1F7F78465d386Fc6e05275e057EF8).getRandom();
+    }
 }
 
 // ["0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2","0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"]
