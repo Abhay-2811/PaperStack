@@ -1,9 +1,20 @@
 'use client'
 import ImagesUpload from "../../components/ImagesUpload"
+import {useState} from 'react'
+import { Web3Storage } from 'web3.storage'
+
 const Create = () => {
-  const handleSubmit = async () => {
+  // move this to env
+  const api_key = process.env.NEXT_PUBLIC_WEB3_API;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const client = new Web3Storage({token: api_key})
+    const cid = await client.put(pages);
+    console.log(cid);
     console.log('Submitted')
   }
+  const [pages, setPages] = useState([]);
+  
   return (
     <form className='ml-40 mr-40 mt-36 mr-20 dark' onSubmit={handleSubmit}>
       <div className='relative z-0 w-full mb-6 group'>
@@ -103,9 +114,9 @@ const Create = () => {
       </div>
 
       <div className='relative z-0 w-full mb-6 group'>
-        <ImagesUpload />
+        <ImagesUpload setPages={(pages)=>setPages(pages)}/>
     </div>
-      <button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+      <button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' type='submit'>
         Submit
       </button>
     </form>

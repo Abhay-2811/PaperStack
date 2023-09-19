@@ -1,6 +1,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Navbar = () => {
 
@@ -9,18 +10,14 @@ const Navbar = () => {
     <nav className='bg-gray-900 w-full z-20 top-0 left-0 border-b border-gray-600 sticky'>
       <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link href='/' className='flex items-center'>
-          <Image src='/logo.jpg' width={40} height={40} alt='logo' />
+          <Image src='/logo.png' width={50} height={50} alt='logo' className='xl:bg-transparent invert mr-5'/>
           <span className='self-center text-2xl font-semibold whitespace-nowrap text-white'>
             PaperStack
           </span>
         </Link>
         <div className='flex md:order-2'>
-          <button
-            type='button'
-            className='text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'
-          >
-            Get started
-          </button>
+          
+          <ConnectButton />
 
           <button
             data-collapse-toggle='navbar-sticky'
