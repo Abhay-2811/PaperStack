@@ -2,6 +2,7 @@
 import ImagesUpload from "../../components/ImagesUpload"
 import {useState} from 'react'
 import { Web3Storage } from 'web3.storage'
+import { deployContract } from "../utils/deployContract"
 
 const Create = () => {
   // move this to env
