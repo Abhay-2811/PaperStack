@@ -24,13 +24,11 @@ const getData = async () => {
     throw new Error('Failed to fetch data')
   }
   let data = await response.json()
-  console.log(data)
 
   return data
 }
 export default async function Jobs () {
     const data = await getData()
-    console.log(data)
   return (
     <div className=' ml-40 mt-20'>
       {data.map(value => (

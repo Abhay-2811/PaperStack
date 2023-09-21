@@ -2,7 +2,10 @@
 import ImagesUpload from "../../components/ImagesUpload"
 import {useState} from 'react'
 import { Web3Storage } from 'web3.storage'
-import { deployContract } from "../utils/deployContract"
+
+import dynamic from "next/dynamic";
+
+const deployContract = dynamic(()=>import("../utils/deployContract"),{ssr: false})
 
 const Create = () => {
   // move this to env
@@ -18,9 +21,9 @@ const Create = () => {
     e.preventDefault();
     const client = new Web3Storage({token: api_key})
     const cid = await client.put(pages);
-    console.log(cid);
-    console.log('Submitted');
-    console.log(formData);
+    await deployContract(JSON.parse(formData.auditors),formData.reward,formData.pages,cid).then((res)=>{
+      console.log(res);
+    });
   }
   const [pages, setPages] = useState([]);
   

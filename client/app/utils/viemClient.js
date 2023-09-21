@@ -1,3 +1,4 @@
+'use client'
 import {createWalletClient, createPublicClient, http, custom} from 'viem'
 import {filecoinCalibration} from 'viem/chains'
 
