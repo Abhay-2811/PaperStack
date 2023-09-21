@@ -1,4 +1,4 @@
-import {createWalletClient, createPublicClient, http} from 'viem'
+import {createWalletClient, createPublicClient, http, custom} from 'viem'
 import {filecoinCalibration} from 'viem/chains'
 
 export const walletClient = createWalletClient({

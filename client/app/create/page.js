@@ -7,28 +7,38 @@ import { deployContract } from "../utils/deployContract"
 const Create = () => {
   // move this to env
   const api_key = process.env.NEXT_PUBLIC_WEB3_API;
+  const [formData, setFormData] = useState({orgName: '',desc: '',auditors: '', reward: 0, pages: 0});
+  
+  const handleChange = (e)=>{
+    const {name, value} = e.target;
+    setFormData((prevFormData)=>({...prevFormData,[name]:value}));
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const client = new Web3Storage({token: api_key})
     const cid = await client.put(pages);
     console.log(cid);
-    console.log('Submitted')
+    console.log('Submitted');
+    console.log(formData);
   }
   const [pages, setPages] = useState([]);
   
   return (
-    <form className='ml-40 mr-40 mt-36 mr-20 dark' onSubmit={handleSubmit}>
+    <form className='ml-40 mr-40 mt-36 dark' onSubmit={handleSubmit}>
       <div className='relative z-0 w-full mb-6 group'>
         <input
           type='text'
-          name='org-name'
-          id='org-name'
+          name='orgName'
+          id='orgName'
           className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
           placeholder=' '
           required
+          onChange={handleChange}
+          
         />
         <label
-          htmlFor='org-name'
+          htmlFor='orgName'
           className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
         >
           Organisation Name
@@ -42,6 +52,7 @@ const Create = () => {
           className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
           placeholder=' '
           required
+          onChange={handleChange}
         />
         <label
           htmlFor='desc'
@@ -55,14 +66,15 @@ const Create = () => {
         <div className='relative z-0 w-full mb-6 group'>
           <input
             type='number'
-            name='reward_pool'
-            id='reward_pool'
+            name='reward'
+            id='reward'
             className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
             placeholder=' '
             required
+            onChange={handleChange}
           />
           <label
-            htmlFor='reward_pool'
+            htmlFor='reward'
             className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
           >
             Reward Pool (Total)
@@ -71,14 +83,15 @@ const Create = () => {
         <div className='relative z-0 w-full mb-6 group'>
           <input
             type='number'
-            name='pages_no'
-            id='pages_no'
+            name='pages'
+            id='pages'
             className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
             placeholder=' '
             required
+            onChange={handleChange}
           />
           <label
-            htmlFor='pages_no'
+            htmlFor='pages'
             className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
           >
             Number of Pages
@@ -94,6 +107,7 @@ const Create = () => {
           className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
           placeholder=' '
           required
+          onChange={handleChange}
         />
         <label
           htmlFor='auditors'
