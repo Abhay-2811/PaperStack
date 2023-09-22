@@ -1,47 +1,54 @@
 'use client'
-import ImagesUpload from "../../components/ImagesUpload"
-import {useState, useEffect} from 'react'
+import ImagesUpload from '../../components/ImagesUpload'
+import { useState, useEffect } from 'react'
 import { Web3Storage } from 'web3.storage'
-import {useWalletClient} from 'wagmi';
-import {filecoinCalibration} from 'wagmi/chains'
-import { deployContract } from "../utils/deployContract"
+import { useWalletClient } from 'wagmi'
+import { filecoinCalibration } from 'wagmi/chains'
+import { deployContract } from '../utils/deployContract'
 
 const Create = () => {
+  let wc;
+  if (typeof window !== 'undefined') {
+    const { data: walletClient } = useWalletClient({
+      chainId: filecoinCalibration.id,
+      onError (error) {
+        console.log('Error', error)
+      }
+    })
+    wc = walletClient;
+  }
   
-  const [walletClient, setWalletClient] = useState(null);
-  
-  useEffect(()=>{
-    const init = ()=>{
-      const { data: walletClient } = useWalletClient({
-        chainId: filecoinCalibration.id,
-        onError(error) {
-          console.log('Error', error)
-        },
-      });
-      setWalletClient(walletClient);
-    }
-    init();
-  },[])
 
+  const api_key = process.env.NEXT_PUBLIC_WEB3_API
+  const [formData, setFormData] = useState({
+    orgName: '',
+    desc: '',
+    auditors: '',
+    reward: 0,
+    pages: 0
+  })
 
-  const api_key = process.env.NEXT_PUBLIC_WEB3_API;
-  const [formData, setFormData] = useState({orgName: '',desc: '',auditors: '', reward: 0, pages: 0});
-  
-  const handleChange = (e)=>{
-    const {name, value} = e.target;
-    setFormData((prevFormData)=>({...prevFormData,[name]:value}));
+  const handleChange = e => {
+    const { name, value } = e.target
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }))
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const client = new Web3Storage({token: api_key})
-    const cid = await client.put(pages);
-    await deployContract(JSON.parse(formData.auditors),formData.reward,formData.pages,cid, walletClient).then((res)=>{
-      console.log(res);
-    });
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const client = new Web3Storage({ token: api_key })
+    const cid = await client.put(pages)
+    await deployContract(
+      JSON.parse(formData.auditors),
+      formData.reward,
+      formData.pages,
+      cid,
+      wc
+    ).then(res => {
+      console.log(res)
+    })
   }
-  const [pages, setPages] = useState([]);
-  
+  const [pages, setPages] = useState([])
+
   return (
     <form className='ml-40 mr-40 mt-36 dark' onSubmit={handleSubmit}>
       <div className='relative z-0 w-full mb-6 group'>
@@ -146,9 +153,12 @@ const Create = () => {
       </div>
 
       <div className='relative z-0 w-full mb-6 group'>
-        <ImagesUpload setPages={(pages)=>setPages(pages)}/>
-    </div>
-      <button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' type='submit'>
+        <ImagesUpload setPages={pages => setPages(pages)} />
+      </div>
+      <button
+        className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+        type='submit'
+      >
         Submit
       </button>
     </form>
@@ -156,9 +166,3 @@ const Create = () => {
 }
 
 export default Create
-
-
-// org creates dao
-// dao data: Id, Org Name, Description, Owner_Add, Reward, Pages, Contract Add
-// people: CA, Address, Role(Owner, Contributor, Auditor), ContributionCid (for Contributors)
-// 
