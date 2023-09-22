@@ -2,13 +2,19 @@
 import ImagesUpload from "../../components/ImagesUpload"
 import {useState} from 'react'
 import { Web3Storage } from 'web3.storage'
-
-import dynamic from "next/dynamic";
-
-const deployContract = dynamic(()=>import("../utils/deployContract"),{ssr: false})
+import {useWalletClient} from 'wagmi';
+import {filecoinCalibration} from 'wagmi/chains'
+import { deployContract } from "../utils/deployContract"
 
 const Create = () => {
-  // move this to env
+  
+  const { data: walletClient } = useWalletClient({
+    chainId: filecoinCalibration.id,
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+
   const api_key = process.env.NEXT_PUBLIC_WEB3_API;
   const [formData, setFormData] = useState({orgName: '',desc: '',auditors: '', reward: 0, pages: 0});
   
@@ -21,7 +27,7 @@ const Create = () => {
     e.preventDefault();
     const client = new Web3Storage({token: api_key})
     const cid = await client.put(pages);
-    await deployContract(JSON.parse(formData.auditors),formData.reward,formData.pages,cid).then((res)=>{
+    await deployContract(JSON.parse(formData.auditors),formData.reward,formData.pages,cid, walletClient).then((res)=>{
       console.log(res);
     });
   }
@@ -38,7 +44,6 @@ const Create = () => {
           placeholder=' '
           required
           onChange={handleChange}
-          
         />
         <label
           htmlFor='orgName'
@@ -142,3 +147,7 @@ const Create = () => {
 }
 
 export default Create
+
+
+// org creates dao
+// dao data: Id, Org Name, Description, Owner_Add, 
