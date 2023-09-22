@@ -1,6 +1,6 @@
 'use client'
 import ImagesUpload from "../../components/ImagesUpload"
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { Web3Storage } from 'web3.storage'
 import {useWalletClient} from 'wagmi';
 import {filecoinCalibration} from 'wagmi/chains'
@@ -8,12 +8,21 @@ import { deployContract } from "../utils/deployContract"
 
 const Create = () => {
   
-  const { data: walletClient } = useWalletClient({
-    chainId: filecoinCalibration.id,
-    onError(error) {
-      console.log('Error', error)
-    },
-  })
+  const [walletClient, setWalletClient] = useState(null);
+  
+  useEffect(()=>{
+    const init = ()=>{
+      const { data: walletClient } = useWalletClient({
+        chainId: filecoinCalibration.id,
+        onError(error) {
+          console.log('Error', error)
+        },
+      });
+      setWalletClient(walletClient);
+    }
+    init();
+  },[])
+
 
   const api_key = process.env.NEXT_PUBLIC_WEB3_API;
   const [formData, setFormData] = useState({orgName: '',desc: '',auditors: '', reward: 0, pages: 0});
@@ -150,4 +159,6 @@ export default Create
 
 
 // org creates dao
-// dao data: Id, Org Name, Description, Owner_Add, 
+// dao data: Id, Org Name, Description, Owner_Add, Reward, Pages, Contract Add
+// people: CA, Address, Role(Owner, Contributor, Auditor), ContributionCid (for Contributors)
+// 
