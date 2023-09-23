@@ -46,7 +46,7 @@ export function Providers({ children }) {
   React.useEffect(() => setMounted(true), []);
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} appInfo={demoAppInfo} theme={midnightTheme()}>
+      <RainbowKitProvider chains={chains} appInfo={demoAppInfo} theme={midnightTheme()} coolMode modalSize='compact' >
         {mounted && children}
       </RainbowKitProvider>
     </WagmiConfig>

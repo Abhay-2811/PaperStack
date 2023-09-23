@@ -12,6 +12,7 @@
     "@rainbow-me/rainbowkit": "^1.0.11",
     "@tableland/sdk": "^4.5.1",
     "autoprefixer": "10.4.15",
+    "ethers": "5.7.2",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.0",
     "lokijs": "^1.5.12",

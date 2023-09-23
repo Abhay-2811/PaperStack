@@ -17,7 +17,7 @@ const Navbar = () => {
         </Link>
         <div className='flex md:order-2'>
           
-          <ConnectButton />
+          <ConnectButton showBalance={false}/>
 
           <button
             data-collapse-toggle='navbar-sticky'

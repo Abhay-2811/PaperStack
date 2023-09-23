@@ -5,34 +5,25 @@
 
 */
 
-import JobCard from "../../components/JobCard"
+import JobCard from '../../components/JobCard'
+import { get_dao_data } from '@/utils/tableland_utils'
 
-const getData = async () => {
-  let headersList = {
-    Accept: '*/*'
-  }
-
-  let response = await fetch(
-    'https://mocki.io/v1/82e12a2f-9a8d-4a0b-9baa-cab659a9f004',
-    {
-      method: 'GET',
-      headers: headersList
-    }
-  )
-  if (!response.ok) {
-    console.log('In error')
-    throw new Error('Failed to fetch data')
-  }
-  let data = await response.json()
-
-  return data
-}
+const getData = async () => {}
 export default async function Jobs () {
-    const data = await getData()
+  const data = await get_dao_data()
   return (
     <div className=' ml-40 mt-20'>
       {data.map(value => (
-        <div key={value}>{<JobCard id={value.id} desc={value.description} by={value.by} rpp={10} />}</div>
+        <div key={value}>
+          {
+            <JobCard
+              id={value.id}
+              desc={value.description}
+              by={value.org_name}
+              rpp={value.reward / value.pages}
+            />
+          }
+        </div>
       ))}
     </div>
   )
