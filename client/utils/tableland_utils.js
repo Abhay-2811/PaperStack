@@ -2,13 +2,16 @@ import { Database } from '@tableland/sdk'
 import { publicClient, get_pk_walletClient } from './viemClient'
 
 export const createTable = async (tableName, fields) => {
-  const db = new Database()
+  const signer = get_pk_walletClient()
+  console.log(signer.address);
+  const db = new Database({ signer })
 
   const { meta: create } = await db
     .prepare(`CREATE TABLE ${tableName} (${fields});`)
     .run()
 
   console.log(create.txn.name)
+  return create.txn.name
 }
 
 // Tables Created
@@ -17,7 +20,7 @@ export const createTable = async (tableName, fields) => {
 dao data (dao_data_314159_337 ): 
 id integer primary key, org_name text, owner_add text, description text,reward integer, pages integer, contract_add text
 
-people ( people_314159_377 ): 
+people ( people_314159_395 ): 
 id integer primary key, dao_add text, user_add text, role text, contribution_json text, reward_released_bool integer
 */
 
@@ -30,7 +33,6 @@ export const add_row_dao_data = async (
   contract_add
 ) => {
   const signer = get_pk_walletClient()
-  console.log(signer.address);
   const db = new Database({ signer })
   const { meta: insert } = await db
     .prepare(
@@ -52,7 +54,7 @@ export const add_row_people = async (
   const db = new Database({ signer })
   const { meta: insert } = await db
     .prepare(
-      `INSERT INTO people_314159_377 (dao_add, user_add, role, contribution_json, reward_released_bool) VALUES (?, ?, ?, ?, ?)`
+      `INSERT INTO people_314159_395 (dao_add, user_add, role, contribution_json, reward_released_bool) VALUES (?, ?, ?, ?, ?)`
     )
     .bind(dao_add, user_add, role, "", 0)
     .run()

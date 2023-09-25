@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@rainbow-me/rainbowkit": "^1.0.11",
     "@tableland/sdk": "^4.5.1",
     "autoprefixer": "10.4.15",

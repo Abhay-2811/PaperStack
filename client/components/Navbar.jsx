@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { usePathname } from 'next/navigation';
+import { Menu } from '@headlessui/react'
 
 const Navbar = () => {
   const path = usePathname();

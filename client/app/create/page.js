@@ -37,7 +37,8 @@ const Create = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     const client = new Web3Storage({ token: api_key })
-    const cid = await client.put(pages)
+    const cid = await client.put(pages);
+    const auditorsArray = JSON.parse(formData.auditors)
     await deployContract(
       JSON.parse(formData.auditors),
       formData.reward,
@@ -47,6 +48,8 @@ const Create = () => {
     ).then(async(dao_contract_add) => {
       await add_row_dao_data(formData.orgName, formData.desc, wc.account.address, formData.reward, formData.pages, dao_contract_add);
       await add_row_people(dao_contract_add,wc.account.address,'owner');
+      await add_row_people(dao_contract_add,auditorsArray[0],'auditor');
+      await add_row_people(dao_contract_add,auditorsArray[1],'auditor');
     })
   }
   const [pages, setPages] = useState([])
