@@ -1,11 +1,11 @@
-
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
-
-
+  const path = usePathname();
   return (
     <nav className='bg-gray-900 w-full z-20 top-0 left-0 border-b border-gray-600 sticky'>
       <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
@@ -52,7 +52,7 @@ const Navbar = () => {
             <li>
               <Link
                 href='/'
-                className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500 active:text-blue-600'
+                className={`block py-2 pl-3 pr-4 ${path == "/" ? "text-blue-600" : "text-white"} bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500 active:text-blue-600`}
                 aria-current='page'
               >
                 Home
@@ -61,7 +61,7 @@ const Navbar = () => {
             <li>
               <Link
                 href='/jobs'
-                className='block py-2 pl-3 pr-4 rounded  md:p-0 md:hover:text-blue-500 text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700'
+                className={`block py-2 pl-3 pr-4 ${path == "/jobs" ? "text-blue-600" : "text-white"} bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500 active:text-blue-600`}
               >
                 Jobs
               </Link>
@@ -69,10 +69,19 @@ const Navbar = () => {
             <li>
               <Link
                 href='/create'
-                className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500'
+                className={`block py-2 pl-3 pr-4 ${path == "/create" ? "text-blue-600" : "text-white"} bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500 active:text-blue-600`}
                 aria-current='page'
               >
                 Create Job
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/myspace'
+                className={`block py-2 pl-3 pr-4 ${path == "/myspace" ? "text-blue-600" : "text-white"} bg-blue-700 rounded md:bg-transparent md:p-0 md:hover:text-blue-500 active:text-blue-600`}
+                aria-current='page'
+              >
+                My Space
               </Link>
             </li>
           </ul>

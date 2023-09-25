@@ -1,10 +1,9 @@
 import { ContractData } from './contract_data';
 import { publicClient } from './viemClient';
-import {parseUnits} from 'viem'
+import {parseUnits, parseEther} from 'viem'
 
 
 export const deployContract = async (auditorsArray, reward, pages, papersCid, walletClient) => {
-    console.log(auditorsArray, reward, pages, papersCid);
     const [account] = await walletClient.getAddresses()
     if(account){
         const hash = await walletClient.deployContract({
@@ -17,4 +16,18 @@ export const deployContract = async (auditorsArray, reward, pages, papersCid, wa
         return receipt.contractAddress;
     }
 
+}
+
+export const add_contributor = async(contractAddress,qty,walletClient)=>{
+    const [account] = await walletClient.getAddresses();
+    const { request } = await publicClient.simulateContract({
+        account,
+        address: contractAddress,
+        abi: ContractData.abi,
+        functionName: 'pledgeJob',
+        args: [qty],
+        value: parseEther('1')
+      })
+      const hash = await walletClient.writeContract(request);
+      await publicClient.waitForTransactionReceipt({ hash });
 }

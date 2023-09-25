@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react'
 import { Web3Storage } from 'web3.storage'
 import { useWalletClient } from 'wagmi'
 import { filecoinCalibration } from 'wagmi/chains'
-import { deployContract } from '../../utils/deployContract'
+import { deployContract } from '../../utils/contract_interaction'
 import Loading from '../loading'
-import { add_row_dao_data } from '../../utils/tableland_utils'
+import { add_row_dao_data, add_row_people } from '../../utils/tableland_utils'
 
 const Create = () => {
   let wc
@@ -36,25 +36,18 @@ const Create = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    // const client = new Web3Storage({ token: api_key })
-    // const cid = await client.put(pages)
-    // await deployContract(
-    //   JSON.parse(formData.auditors),
-    //   formData.reward,
-    //   formData.pages,
-    //   cid,
-    //   wc
-    // ).then(async(dao_contract_add) => {
-    //   await add_row_dao_data(formData.orgName, formData.desc, wc.account.address, formData.reward, formData.pages, dao_contract_add);
-    // })
-    await add_row_dao_data(
-      formData.orgName,
-      formData.desc,
-      wc.account.address,
+    const client = new Web3Storage({ token: api_key })
+    const cid = await client.put(pages)
+    await deployContract(
+      JSON.parse(formData.auditors),
       formData.reward,
       formData.pages,
-      '0xb59E00B604cb492d3C0bAe8349fbA469f5E94885'
-    )
+      cid,
+      wc
+    ).then(async(dao_contract_add) => {
+      await add_row_dao_data(formData.orgName, formData.desc, wc.account.address, formData.reward, formData.pages, dao_contract_add);
+      await add_row_people(dao_contract_add,wc.account.address,'owner');
+    })
   }
   const [pages, setPages] = useState([])
 

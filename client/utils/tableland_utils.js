@@ -17,8 +17,8 @@ export const createTable = async (tableName, fields) => {
 dao data (dao_data_314159_337 ): 
 id integer primary key, org_name text, owner_add text, description text,reward integer, pages integer, contract_add text
 
-people ( people_314159_334 ): 
-id integer primary key, dao_add text, user_add text, role text, contribution_json text, contract_add text, reward_released_bool integer
+people ( people_314159_377 ): 
+id integer primary key, dao_add text, user_add text, role text, contribution_json text, reward_released_bool integer
 */
 
 export const add_row_dao_data = async (
@@ -40,31 +40,25 @@ export const add_row_dao_data = async (
     .run()
   const hash = insert.txn.transactionHash
   await publicClient.waitForTransactionReceipt({ hash })
-  const { results } = await db
-    .prepare(`SELECT * FROM dao_data_314159_337;`)
-    .all()
-  console.log(results)
+  console.log("Added to dao data")
 }
 
 export const add_row_people = async (
   dao_add,
   user_add,
-  role,
-  contribution_json,
-  contract_add
+  role
 ) => {
   const signer = get_pk_walletClient()
   const db = new Database({ signer })
   const { meta: insert } = await db
     .prepare(
-      `INSERT INTO people_314159_334 (dao_add, user_add, role, contribution_json, contract_add, reward_released_bool) VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO people_314159_377 (dao_add, user_add, role, contribution_json, reward_released_bool) VALUES (?, ?, ?, ?, ?)`
     )
-    .bind(dao_add, user_add, role, contribution_json, contract_add, 0)
+    .bind(dao_add, user_add, role, "", 0)
     .run()
   const hash = insert.txn.transactionHash
   await publicClient.waitForTransactionReceipt({ hash })
-  const { results } = await db.prepare(`SELECT * FROM people_314159_334;`).all()
-  console.log(results)
+      console.log("Added people");
 }
 
 export const get_dao_data = async () => {
@@ -76,8 +70,10 @@ export const get_dao_data = async () => {
     'https://testnets.tableland.network/api/v1/query?statement=select%20%2A%20from%20dao_data_314159_337',
     {
       method: 'GET',
-      headers: headersList
-    }
+      headers: headersList,
+      next: { revalidate: 10 }
+    },
+    
   )
   if (!response.ok) {
     console.log('In error')
@@ -93,7 +89,7 @@ export const get_people = async () => {
       }
     
       let response = await fetch(
-        'https://testnets.tableland.network/api/v1/query?statement=select%20%2A%20from%20people_314159_334',
+        'https://testnets.tableland.network/api/v1/query?statement=select%20%2A%20from%20people_314159_377',
         {
           method: 'GET',
           headers: headersList

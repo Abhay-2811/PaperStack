@@ -8,7 +8,6 @@ export const publicClient = createPublicClient({
 })
 
 export function get_pk_walletClient () {
-    console.log(process.env.NEXT_PUBLIC_PRIVATE_KEY);
   const owner = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY)
   const provider = getDefaultProvider(
     'https://api.calibration.node.glif.io/rpc/v1'

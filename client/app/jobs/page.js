@@ -8,7 +8,6 @@
 import JobCard from '../../components/JobCard'
 import { get_dao_data } from '@/utils/tableland_utils'
 
-const getData = async () => {}
 export default async function Jobs () {
   const data = await get_dao_data()
   return (
