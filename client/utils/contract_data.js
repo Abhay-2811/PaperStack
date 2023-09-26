@@ -1,196 +1,196 @@
 export const ContractData = {
   abi: [
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: 'address[]',
-          name: '_auditors',
-          type: 'address[]'
+          "internalType": "address[]",
+          "name": "_auditors",
+          "type": "address[]"
         },
         {
-          internalType: 'uint256',
-          name: 'reward',
-          type: 'uint256'
+          "internalType": "uint256",
+          "name": "reward",
+          "type": "uint256"
         },
         {
-          internalType: 'uint256',
-          name: 'pages',
-          type: 'uint256'
+          "internalType": "uint256",
+          "name": "pages",
+          "type": "uint256"
         },
         {
-          internalType: 'string',
-          name: 'PapersCid',
-          type: 'string'
+          "internalType": "string",
+          "name": "PapersCid",
+          "type": "string"
         }
       ],
-      stateMutability: 'payable',
-      type: 'constructor'
+      "stateMutability": "payable",
+      "type": "constructor"
     },
     {
-      anonymous: false,
-      inputs: [
+      "anonymous": false,
+      "inputs": [
         {
-          indexed: true,
-          internalType: 'address',
-          name: 'previousOwner',
-          type: 'address'
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
         },
         {
-          indexed: true,
-          internalType: 'address',
-          name: 'newOwner',
-          type: 'address'
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
         }
       ],
-      name: 'OwnershipTransferred',
-      type: 'event'
+      "name": "OwnershipTransferred",
+      "type": "event"
     },
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: 'address',
-          name: '',
-          type: 'address'
+          "internalType": "uint256",
+          "name": "qty",
+          "type": "uint256"
+        }
+      ],
+      "name": "pledgeJob",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "validateJob",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         },
         {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256'
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
-      name: 'assignedPages',
-      outputs: [
+      "name": "assignedPages",
+      "outputs": [
         {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256'
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
-      stateMutability: 'view',
-      type: 'function'
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256'
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
-      name: 'auditors',
-      outputs: [
+      "name": "auditors",
+      "outputs": [
         {
-          internalType: 'address',
-          name: '',
-          type: 'address'
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
       ],
-      stateMutability: 'view',
-      type: 'function'
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [],
-      name: 'data_cid',
-      outputs: [
+      "inputs": [],
+      "name": "data_cid",
+      "outputs": [
         {
-          internalType: 'string',
-          name: '',
-          type: 'string'
+          "internalType": "string",
+          "name": "",
+          "type": "string"
         }
       ],
-      stateMutability: 'view',
-      type: 'function'
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: 'address',
-          name: 'user',
-          type: 'address'
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
         }
       ],
-      name: 'getAssignedPages',
-      outputs: [
+      "name": "getAssignedPages",
+      "outputs": [
         {
-          internalType: 'uint256[]',
-          name: '',
-          type: 'uint256[]'
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
       ],
-      stateMutability: 'view',
-      type: 'function'
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [],
-      name: 'numPages',
-      outputs: [
+      "inputs": [],
+      "name": "numPages",
+      "outputs": [
         {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256'
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
-      stateMutability: 'view',
-      type: 'function'
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [],
-      name: 'owner',
-      outputs: [
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
         {
-          internalType: 'address',
-          name: '',
-          type: 'address'
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
       ],
-      stateMutability: 'view',
-      type: 'function'
-    },
-    {
-      inputs: [
-        {
-          internalType: 'uint256',
-          name: 'qty',
-          type: 'uint256'
-        }
-      ],
-      name: 'pledgeJob',
-      outputs: [],
-      stateMutability: 'payable',
-      type: 'function'
-    },
-    {
-      inputs: [],
-      name: 'renounceOwnership',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function'
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'newOwner',
-          type: 'address'
-        }
-      ],
-      name: 'transferOwnership',
-      outputs: [],
-      stateMutability: 'nonpayable',
-      type: 'function'
-    },
-    {
-      inputs: [
-        {
-          internalType: 'address payable',
-          name: 'user',
-          type: 'address'
-        }
-      ],
-      name: 'validateJob',
-      outputs: [],
-      stateMutability: 'payable',
-      type: 'function'
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   bytecode:

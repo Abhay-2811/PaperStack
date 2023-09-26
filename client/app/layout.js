@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import '@rainbow-me/rainbowkit/styles.css'
 import { Providers } from './providers'
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

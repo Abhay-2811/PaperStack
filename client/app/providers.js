@@ -11,6 +11,7 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { filecoinCalibration, filecoin } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
+
 const { chains, publicClient } = configureChains(
   [filecoin, filecoinCalibration],
   [publicProvider()]

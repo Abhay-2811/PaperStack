@@ -3,7 +3,7 @@ import { publicClient, get_pk_walletClient } from './viemClient'
 
 export const createTable = async (tableName, fields) => {
   const signer = get_pk_walletClient()
-  console.log(signer.address);
+  console.log(signer.address)
   const db = new Database({ signer })
 
   const { meta: create } = await db
@@ -42,25 +42,21 @@ export const add_row_dao_data = async (
     .run()
   const hash = insert.txn.transactionHash
   await publicClient.waitForTransactionReceipt({ hash })
-  console.log("Added to dao data")
+  console.log('Added to dao data')
 }
 
-export const add_row_people = async (
-  dao_add,
-  user_add,
-  role
-) => {
+export const add_row_people = async (dao_add, user_add, role) => {
   const signer = get_pk_walletClient()
   const db = new Database({ signer })
   const { meta: insert } = await db
     .prepare(
       `INSERT INTO people_314159_395 (dao_add, user_add, role, contribution_json, reward_released_bool) VALUES (?, ?, ?, ?, ?)`
     )
-    .bind(dao_add, user_add, role, "", 0)
+    .bind(dao_add, user_add, role, '', 0)
     .run()
   const hash = insert.txn.transactionHash
   await publicClient.waitForTransactionReceipt({ hash })
-      console.log("Added people");
+  console.log('Added people')
 }
 
 export const get_dao_data = async () => {
@@ -74,8 +70,7 @@ export const get_dao_data = async () => {
       method: 'GET',
       headers: headersList,
       next: { revalidate: 10 }
-    },
-    
+    }
   )
   if (!response.ok) {
     console.log('In error')
@@ -86,21 +81,34 @@ export const get_dao_data = async () => {
 }
 
 export const get_people = async () => {
-    let headersList = {
-        Accept: '*/*'
-      }
-    
-      let response = await fetch(
-        'https://testnets.tableland.network/api/v1/query?statement=select%20%2A%20from%20people_314159_377',
-        {
-          method: 'GET',
-          headers: headersList
-        }
-      )
-      if (!response.ok) {
-        console.log('In error')
-        throw new Error('Failed to fetch data')
-      }
-      let data = await response.json()
-      return data
+  let headersList = {
+    Accept: '*/*'
+  }
+
+  let response = await fetch(
+    'https://testnets.tableland.network/api/v1/query?statement=select%20%2A%20from%20people_314159_377',
+    {
+      method: 'GET',
+      headers: headersList
+    }
+  )
+  if (!response.ok) {
+    console.log('In error')
+    throw new Error('Failed to fetch data')
+  }
+  let data = await response.json()
+  return data
+}
+
+export const add_contribution = async (user_add, dao_add, contribution) => {
+  const signer = get_pk_walletClient()
+  const db = new Database({ signer })
+  const stmt = await db
+    .prepare(
+      `UPDATE people_314159_395 SET contribution_json='${contribution}' WHERE user_add=${user_add} and dao_add=${dao_add}`
+    )
+    .run()
+  const hash = stmt.meta.txn.transactionHash
+  await publicClient.waitForTransactionReceipt({ hash })
+  console.log('Added Contribution')
 }

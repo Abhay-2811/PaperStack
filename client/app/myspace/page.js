@@ -2,6 +2,8 @@
 'use client'
 import { useWalletClient } from 'wagmi'
 import { filecoinCalibration } from 'wagmi/chains'
+import Myspace_auditor from '@/components/Myspace_auditor'
+import Myspace_contri from '@/components/Myspace_contri'
 
 const fetchDataWithAdd = async address => {
   let headersList = {
@@ -38,11 +40,11 @@ const myspace = async () => {
   const data = await fetchDataWithAdd(wc?.account.address)
 
   return (
-    <div>
+    <div className=' ml-40 mt-20'>
       {data.map((value, index) => (
         <div key={index}>
           {value.role == 'owner' ? <>Is owner</> : <></>}
-          {value.role == 'auditor' ? <>Is auditor</>:<></>}
+          {value.role == 'auditor' ? <Myspace_contri data={value}/>:<></>}
           {value.role == 'contributor' ? <>Is contributor</>:<></>}
         </div>
       ))}

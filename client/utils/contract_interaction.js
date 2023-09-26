@@ -31,3 +31,13 @@ export const add_contributor = async(contractAddress,qty,walletClient)=>{
       const hash = await walletClient.writeContract(request);
       await publicClient.waitForTransactionReceipt({ hash });
 }
+
+export const get_alloted_pages = async(contractAdd, userAdd)=>{
+    const pagesAlloted = await publicClient.readContract({
+        address: contractAdd,
+        abi: ContractData.abi,
+        functionName: 'getAssignedPages',
+        args: [userAdd]
+    })
+    return pagesAlloted;
+}

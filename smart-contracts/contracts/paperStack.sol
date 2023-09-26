@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+
 interface fvm_random{
     function getRandom() view external returns(uint256[] memory);
 }
@@ -16,30 +17,17 @@ contract PaperStack is Ownable{
     uint totalReward;
     uint public numPages;
     address[] public auditors;
-
-    struct Paper{
-        string PaperCid;
-        bool beingProcessed;
-        bool processed;
-    }
-
-
-    mapping(uint=>Paper) public paperIds;
+    string public data_cid;
+    address fvm_random_ca = 0xA9aB19aDd1f1F7F78465d386Fc6e05275e057EF8;
     mapping(address=>uint[]) public assignedPages;
     // auditors: users with audit access i.e can blame a contributor
-    constructor(address[] memory _auditors, uint reward, uint pages, string[] memory PapersCid) payable {
+    constructor(address[] memory _auditors, uint reward, uint pages, string memory PapersCid) payable {
         require(msg.value == reward,"Transact exact reward amount");
-        require(PapersCid.length == pages,"No. of pages and cid not same");
         auditors = _auditors;
         totalReward = reward;
         numPages = pages;
-
-        for (uint i=0; i < PapersCid.length; i++) 
-        {
-            uint count = _pId.current();
-            paperIds[count] = Paper(PapersCid[i],false,false);
-            _pId.increment();
-        }
+        data_cid = PapersCid;
+        
     }
 
     modifier onlyAuditors(){
@@ -55,21 +43,18 @@ contract PaperStack is Ownable{
         _;
     }
 
-    function addPages(string[] memory pageCids) public onlyOwner{
-        numPages = numPages + pageCids.length;
-        for (uint i=0; i < pageCids.length; i++) 
-        {
-            uint count = _pId.current();
-            paperIds[count] = Paper(pageCids[i],false,false);
-            _pId.increment();
-        }
-    }
 
     // user pledges pages he will complete, stakes few tokens to keep them honest and punctual
     function pledgeJob(uint qty) public payable{
         require(msg.value == 1000000000000000000, "Stake exactly 1 Token");
+        require(qty <= 10, "Max 10 pages can be requested");
         //request random values for qty and assign it to users
-        assignedPages[msg.sender] = [0,1,3,5];
+        uint256[] memory randomValues = fvm_random(fvm_random_ca).getRandom();
+        for (uint i=0; i<qty; i++) 
+        {
+            uint index = (randomValues[i]/(block.timestamp) % numPages) + 1;
+            assignedPages[msg.sender].push(index);
+        }
 
     } 
 
@@ -84,12 +69,4 @@ contract PaperStack is Ownable{
         user.transfer( (1000000000000000000+((totalReward/numPages)*userPages)));
     }
 
-    function getData() view public returns(uint256[] memory){
-        return fvm_random(0xA9aB19aDd1f1F7F78465d386Fc6e05275e057EF8).getRandom();
-    }
 }
-
-// ["0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2","0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"]
-// 100000
-// 5
-// ["a","b","c","d","e"]
