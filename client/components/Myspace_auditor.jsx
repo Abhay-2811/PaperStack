@@ -5,7 +5,7 @@ const Myspace_auditor = props => {
       <h1 className='text-2xl'>Auditor</h1>
       <hr class="h-px my-5 border-0 bg-blue-400"></hr>
       <h1>
-        Contract Address: {''}
+      <span className='text-gray-300'><b>Contract Address: {''}</b></span>
         <a
           href={`https://calibration.filfox.info/en/address/${props.data.dao_add}`}
           target='_blank'

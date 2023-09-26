@@ -105,7 +105,7 @@ export const add_contribution = async (user_add, dao_add, contribution) => {
   const db = new Database({ signer })
   const stmt = await db
     .prepare(
-      `UPDATE people_314159_395 SET contribution_json='${contribution}' WHERE user_add=${user_add} and dao_add=${dao_add}`
+      `UPDATE people_314159_395 SET contribution_json='${contribution}' WHERE user_add='${user_add}' and dao_add='${dao_add}'`
     )
     .run()
   const hash = stmt.meta.txn.transactionHash
