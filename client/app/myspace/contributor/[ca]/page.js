@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { add_contribution } from '@/utils/tableland_utils'
 import { useWalletClient } from 'wagmi'
 import { filecoinCalibration } from 'wagmi/chains'
+
 const contributor = ({ params }) => {
   let wc
   if (typeof window !== 'undefined') {

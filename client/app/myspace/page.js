@@ -45,8 +45,8 @@ const myspace = async () => {
       {data.map((value, index) => (
         <div key={index}>
           {value.role == 'owner' ? <Myspace_owner data={value}/> : <></>}
-          {value.role == 'auditor' ? <Myspace_owner data={value}/>:<></>}
-          {value.role == 'contributor' ? <>Is contributor</>:<></>}
+          {value.role == 'auditor' ? <Myspace_auditor data={value}/>:<></>}
+          {value.role == 'contributor' ? <Myspace_contri data={value}/>:<></>}
         </div>
       ))}
     </div>

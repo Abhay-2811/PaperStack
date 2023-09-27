@@ -1,15 +1,20 @@
-'use client'
-import Image from 'next/image'
-import Loading from './loading'
+
 // import { add_row_people, createTable } from '@/utils/tableland_utils'
-import { add_contribution } from '@/utils/tableland_utils'
+
+import Image from "next/image"
 export default function Home () {
-  const handleSubmit = async () => {
-    await add_contribution('0x72d2F62A93305752CC57D48Ea217CA687EA43dc0','0x285c7ae7349ac6b03e22e0c81c9b283766c3fb90',{"id":'1'});
-  }
   return (
-    <>
-      <button onClick={handleSubmit}>CLick</button>
-    </>
+    <div className="flex flex-col m-32 content-center">
+      <h1 class='mb-10 text-3xl font-extrabold  text-white md:text-5xl lg:text-6xl'>
+        <span class='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          Paper Stack
+        </span>{' '}
+        Eco-Friendly and Scalable
+      </h1>
+      <p class='text-2xl font-normal lg:text-xl text-gray-400 align-middle ml-[12%]'>
+        Using PaperStack recycle old papers by digitalizing them using Filecoin and populate <br />open-data by converting on-paper historical datasets and researches to digital format.
+      </p>
+      <Image src='/bg-removebg-preview.png' width={500} height={500} className="ml-[23%]"/>
+    </div>
   )
 }

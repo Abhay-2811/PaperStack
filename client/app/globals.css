@@ -28,10 +28,10 @@ body {
 
 #wifi-loader {
   --background: #62abff;
-  --front-color: #6645fb;
+  --front-color: #614cbc;
   --back-color: #c3c8de;
   --text-color: #ffffff;
-  width: 64px;
+  width: max-content;
   height: 64px;
   border-radius: 50px;
   position: relative;
@@ -118,14 +118,15 @@ body {
 
 #wifi-loader .text {
   position: absolute;
-  bottom: -60px;
+  bottom: -90px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: lowercase;
   font-weight: 500;
-  font-size: 27px;
+  font-size: 20px;
   letter-spacing: 0.2px;
+  margin-top: 10px;
 }
 
 #wifi-loader .text::before, #wifi-loader .text::after {
