@@ -1,6 +1,3 @@
-
-// import { add_row_people, createTable } from '@/utils/tableland_utils'
-
 import Image from "next/image"
 export default function Home () {
   return (

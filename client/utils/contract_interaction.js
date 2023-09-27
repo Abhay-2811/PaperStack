@@ -38,6 +38,17 @@ export const get_alloted_pages = async(contractAdd, userAdd)=>{
         abi: ContractData.abi,
         functionName: 'getAssignedPages',
         args: [userAdd]
-    })
+    });
+    console.log(pagesAlloted);
     return pagesAlloted;
+}
+
+export const get_cid = async(contractAdd)=>{
+    const cid = await publicClient.readContract({
+        address: contractAdd,
+        abi: ContractData.abi,
+        functionName:'data_cid'
+    });
+    console.log(cid);
+    return cid;
 }

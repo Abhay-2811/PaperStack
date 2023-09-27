@@ -2,11 +2,14 @@
 import Papa from 'papaparse'
 import { useState } from 'react'
 import { add_contribution } from '@/utils/tableland_utils'
+import { get_alloted_pages, get_cid } from '@/utils/contract_interaction'
 import { useWalletClient } from 'wagmi'
 import { filecoinCalibration } from 'wagmi/chains'
 
-const contributor = ({ params }) => {
+const contributor = async ({ params }) => {
   let wc
+  let pagesAlloted
+
   if (typeof window !== 'undefined') {
     const { data: walletClient } = useWalletClient({
       chainId: filecoinCalibration.id,
@@ -16,7 +19,13 @@ const contributor = ({ params }) => {
     })
     wc = walletClient
   }
-  const [files, setFiles] = useState()
+
+  if (wc) {
+    const pages_alloted = await get_alloted_pages(params.ca, wc.account.address)
+    pagesAlloted = pages_alloted.slice(0,4)
+    console.log(pages_alloted)
+  }
+  const cid = await get_cid(params.ca)
 
   const handleChange = e => {
     const files = e.target.files
@@ -26,9 +35,13 @@ const contributor = ({ params }) => {
   const handleSubmit = async () => {
     if (files) {
       Papa.parse(files[0], {
-        complete: function (results) {
+        complete: async function (results) {
           console.log('Finished parsing to json, Beginning table edit...')
-          add_contribution(wc.account.address,params.ca,JSON.stringify(results.data))
+          await add_contribution(
+            wc.account.address,
+            params.ca,
+            JSON.stringify(results.data)
+          )
         }
       })
     } else {
@@ -48,6 +61,19 @@ const contributor = ({ params }) => {
           </span>
         </a>
       </h1>
+      <div className='grid grid-cols-5 gap-1 mt-10'>
+        {pagesAlloted?.map((pageNo, index) => (
+          <div
+            key={index}
+            className='focus:outline-none text-2 bg-red-400 focus:ring-4 focus:ring-purple-300 font-semibold rounded-lg text-base px-5 py-2.5 mb-2 w-max mt-5'
+          >
+            <a href={`https://${cid}.ipfs.w3s.link/${index+1}.png`} target='_blank'>
+              View Page {index+1}
+            </a>
+          </div>
+        ))}
+      </div>
+
       <label
         htmlFor='contribution_csv'
         className='block mb-2 text-lg font-medium text-gray-400 mt-20'

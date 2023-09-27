@@ -22,7 +22,6 @@ const fetchDataWithId = async contract_add => {
 }
 const Myspace_contri = async props => {
   const dao_data = await fetchDataWithId(props.data.dao_add);
-  const allotedPages  =await get_alloted_pages(props.data.dao_add, props.data.user_add);
   return (
     <div className='flex flex-col text-lg h-max mb-10 space-y-4 item-center bg-gray-800 border shadow-lg shadow-red-400 border-gray-700 p-6 m-6 rounded-md w-4/5 right-3/4'>
       <h1 className='text-2xl'>Contributor</h1>
@@ -49,10 +48,6 @@ const Myspace_contri = async props => {
       <h1>
         <span className='text-gray-300'><b>Description: {''}</b> </span>
         {dao_data.description}
-      </h1>
-      <h1>
-        <span className='text-gray-300'><b>Alloted Pages: {''}</b> </span>
-        {allotedPages}
       </h1>
 
       <Link href={`myspace/contributor/${props.data.dao_add}`}>
