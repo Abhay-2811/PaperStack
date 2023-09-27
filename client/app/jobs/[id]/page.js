@@ -4,6 +4,7 @@ import { filecoinCalibration } from 'wagmi/chains'
 import { add_contributor } from '@/utils/contract_interaction'
 import { useState } from 'react'
 import { add_row_people } from '@/utils/tableland_utils'
+import Loading from '@/app/loading'
 
 const fetchDataWithId = async id => {
   let headersList = {
@@ -38,6 +39,8 @@ const id = async ({ params }) => {
   }
 
   const [qty, setQty] = useState(0)
+  const [loading, setLoading] = useState({ bool: false, text: '' })
+  const [alldone, setAlldone] = useState(false)
 
   const data = await fetchDataWithId(params.id)
 
@@ -46,12 +49,30 @@ const id = async ({ params }) => {
     setQty(e.target.value)
   }
 
-  const handleClick = async (e) => {
+  const handleClick = async e => {
     e.preventDefault()
-    await add_contributor(data.contract_add, qty, wc);
-    await add_row_people(data.contract_add,wc.account.address,'contributor');
+    setLoading({ bool: true, text: 'contract interation...' })
+    await add_contributor(data.contract_add, qty, wc)
+    setLoading({ bool: true, text: 'table update...' })
+    await add_row_people(data.contract_add, wc.account.address, 'contributor')
+    setAlldone(true)
   }
-
+  if (alldone) {
+    return (
+      <div className='flex flex-col space-y-10 ml-[10%] mt-[10%] content-center align-middle '>
+        <h1 className='text-5xl font-bold text-blue-400 content-center'>
+          Added Contributor
+        </h1>
+        <p>
+          Note: Data would reflect on jobs page in few minutes due to on-chain
+          table updation.
+        </p>
+      </div>
+    )
+  }
+  if (loading.bool) {
+    return <Loading text={loading.text} />
+  }
   return (
     <div className=' max-w-lg p-6 border rounded-lg shadow bg-gray-800 border-gray-700 ml-[33%] mt-[10%]'>
       <h5 className='mb-2 text-2xl tracking-tight text-white'>

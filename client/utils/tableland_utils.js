@@ -41,6 +41,7 @@ export const add_row_dao_data = async (
     .bind(org_name, owner_add, desc, reward, pages, contract_add)
     .run()
   const hash = insert.txn.transactionHash
+  console.log(hash);
   await publicClient.waitForTransactionReceipt({ hash })
   console.log('Added to dao data')
 }
