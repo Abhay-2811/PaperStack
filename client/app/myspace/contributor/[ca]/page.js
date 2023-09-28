@@ -7,6 +7,7 @@ import { useWalletClient } from 'wagmi'
 import { filecoinCalibration } from 'wagmi/chains'
 
 const contributor = async ({ params }) => {
+  const [files, setFiles] = useState();
   let wc
   let pagesAlloted
 
@@ -23,10 +24,9 @@ const contributor = async ({ params }) => {
   if (wc) {
     const pages_alloted = await get_alloted_pages(params.ca, wc.account.address)
     pagesAlloted = pages_alloted.slice(0,4)
-    console.log(pages_alloted)
   }
   const cid = await get_cid(params.ca)
-  const [files, setFiles] = useState();
+  
   
   const handleChange = e => {
     const files = e.target.files
