@@ -52,7 +52,7 @@ contract PaperStack is Ownable{
         uint256[] memory randomValues = fvm_random(fvm_random_ca).getRandom();
         for (uint i=0; i<qty; i++) 
         {
-            uint index = (randomValues[i]/(block.timestamp) % numPages) + 1;
+            uint index = ((randomValues[i]/(block.timestamp)) % numPages) + 1;
             assignedPages[msg.sender].push(index);
         }
 
