@@ -26,7 +26,8 @@ const contributor = async ({ params }) => {
     console.log(pages_alloted)
   }
   const cid = await get_cid(params.ca)
-
+  const [files, setFiles] = useState();
+  
   const handleChange = e => {
     const files = e.target.files
     setFiles(files)
