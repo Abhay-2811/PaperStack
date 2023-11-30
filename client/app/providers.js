@@ -10,12 +10,24 @@ import {
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { filecoinCalibration, filecoin } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
+import { NextUIProvider } from '@nextui-org/react'
 
+const defaultChains = [
+  {
+    ...filecoinCalibration,
+    iconUrl:
+      'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/128/Filecoin-icon.png'
+  },
+  {
+    ...filecoin,
+    iconUrl:
+      'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency/128/Filecoin-icon.png'
+  }
+]
 
-const { chains, publicClient } = configureChains(
-  [filecoin, filecoinCalibration],
-  [publicProvider()]
-)
+const { chains, publicClient } = configureChains(defaultChains, [
+  publicProvider()
+])
 
 const { connectors } = getDefaultWallets({
   appName: 'Paper Stack',
@@ -37,16 +49,23 @@ export function Providers ({ children }) {
   const [mounted, setMounted] = React.useState(false)
   React.useEffect(() => setMounted(true), [])
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider
-        chains={chains}
-        appInfo={demoAppInfo}
-        theme={midnightTheme()}
-        coolMode
-        modalSize='compact'
-      >
-        {mounted && children}
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <NextUIProvider>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider
+          chains={chains}
+          initialChain={filecoinCalibration.id}
+          appInfo={demoAppInfo}
+          theme={midnightTheme({
+            accentColor: '#76a9fa',
+            accentColorForeground: 'black',
+            borderRadius: 'medium'
+          })}
+          coolMode
+          modalSize='compact'
+        >
+          {mounted && children}
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </NextUIProvider>
   )
 }

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@lighthouse-web3/sdk": "^0.2.8",
+    "@nextui-org/react": "^2.2.9",
     "@rainbow-me/rainbowkit": "^1.0.11",
     "@tableland/sdk": "^4.5.1",
     "autoprefixer": "10.4.15",
@@ -17,6 +18,7 @@
     "ethers": "5.7.2",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.0",
+    "framer-motion": "^10.16.9",
     "lokijs": "^1.5.12",
     "next": "13.4.19",
     "papaparse": "^5.4.1",

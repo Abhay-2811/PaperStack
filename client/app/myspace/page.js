@@ -5,6 +5,7 @@ import { filecoinCalibration } from 'wagmi/chains'
 import Myspace_auditor from '@/components/Myspace_auditor'
 import Myspace_contri from '@/components/Myspace_contri'
 import Myspace_owner from '@/components/Myspace_owner'
+import { Tabs, Tab } from '@nextui-org/tabs'
 
 const fetchDataWithAdd = async address => {
   let headersList = {
@@ -41,14 +42,31 @@ const myspace = async () => {
   const data = await fetchDataWithAdd(wc?.account.address)
 
   return (
-    <div className=' ml-40 mt-20'>
-      {data.map((value, index) => (
-        <div key={index}>
-          {value.role == 'owner' ? <Myspace_owner data={value}/> : <></>}
-          {value.role == 'auditor' ? <Myspace_auditor data={value}/>:<></>}
-          {value.role == 'contributor' ? <Myspace_contri data={value}/>:<></>}
-        </div>
-      ))}
+    <div className='flex flex-col items-center w-auto'>
+      <Tabs aria-label='options' className='dark w-[60%] mt-8' fullWidth={true}> 
+        <Tab key='proposals' title='Proposals'>
+          <>Proposals</>
+        </Tab>
+        <Tab key='daos' title='Dao Involvements'>
+          <div className=' mt-20'>
+            {data.map((value, index) => (
+              <div key={index}>
+                {value.role == 'owner' ? <Myspace_owner data={value} /> : <></>}
+                {value.role == 'auditor' ? (
+                  <Myspace_auditor data={value} />
+                ) : (
+                  <></>
+                )}
+                {value.role == 'contributor' ? (
+                  <Myspace_contri data={value} />
+                ) : (
+                  <></>
+                )}
+              </div>
+            ))}
+          </div>
+        </Tab>
+      </Tabs>
     </div>
   )
 }

@@ -5,9 +5,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 
-interface fvm_random{
-    function getRandom() view external returns(uint256[] memory);
-}
+
 
 contract PaperStack is Ownable{
 
@@ -18,10 +16,9 @@ contract PaperStack is Ownable{
     uint public numPages;
     address[] public auditors;
     string public data_cid;
-    address fvm_random_ca = 0xA9aB19aDd1f1F7F78465d386Fc6e05275e057EF8;
     mapping(address=>uint[]) public assignedPages;
     // auditors: users with audit access i.e can blame a contributor
-    constructor(address[] memory _auditors, uint reward, uint pages, string memory PapersCid) payable {
+    constructor(address[] memory _auditors, uint reward, uint pages, string memory PapersCid) {
         require(msg.value == reward,"Transact exact reward amount");
         auditors = _auditors;
         totalReward = reward;
@@ -46,10 +43,9 @@ contract PaperStack is Ownable{
 
     // user pledges pages he will complete, stakes few tokens to keep them honest and punctual
     function pledgeJob(uint qty) public payable{
-        require(msg.value == 1000000000000000000, "Stake exactly 1 Token");
         require(qty <= 10, "Max 10 pages can be requested");
         //request random values for qty and assign it to users
-        uint256[] memory randomValues = fvm_random(fvm_random_ca).getRandom();
+        uint256[] memory randomValues =[1503037, 1726119, 3736581, 4538967, 4587032, 4753158, 4985369, 7210429, 7596545, 9651881];
         for (uint i=0; i<qty; i++) 
         {
             uint index = ((randomValues[i]/(block.timestamp)) % numPages) + 1;

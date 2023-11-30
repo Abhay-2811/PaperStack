@@ -8,6 +8,7 @@ req:
 - Reward Per page
 */
 import Link from 'next/link'
+import Image from 'next/image'
 const JobCard = props => {
   return (
     // <div className="flex flex-col h-60 mb-10 item-center bg-gray-800 border border-gray-700 p-6 m-6 rounded-md w-4/5 right-3/4">
@@ -39,12 +40,14 @@ const JobCard = props => {
 
         <span className=''>{props.data.description}</span>
       </h1>
-      <h1>
+      <h1 className='flex space-x-3'>
         <span className='text-gray-300'>
           <b>Reward Per Paper (RPP): {''}</b>
         </span>
 
-        <span className=''>{props.data.reward / props.data.pages} FIL</span>
+        <div className='flex'>
+          {props.data.reward / props.data.pages }<Image src='/clover.svg' width={30} height={30} alt='token logo' />
+        </div>
       </h1>
       <Link href={`/jobs/${props.data.id}`}>
         <button

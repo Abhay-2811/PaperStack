@@ -1,25 +1,43 @@
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { usePathname } from 'next/navigation';
-
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { usePathname } from 'next/navigation'
+import { useAccount } from 'wagmi'
 
 const Navbar = () => {
-  const path = usePathname();
+  const path = usePathname()
+  const { isConnected } = useAccount()
   return (
     <nav className='bg-gray-900 w-full z-20 top-0 left-0 border-b border-gray-600 sticky'>
       <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
         <Link href='/' className='flex items-center'>
-          <Image src='/logo.png' width={50} height={50} alt='logo' className='xl:bg-transparent invert mr-5'/>
+          <Image
+            src='/logo.png'
+            width={50}
+            height={50}
+            alt='logo'
+            className='xl:bg-transparent invert mr-5'
+          />
           <span className='self-center text-2xl font-semibold whitespace-nowrap text-white'>
             PaperStack
           </span>
         </Link>
-        <div className='flex md:order-2'>
-          
-          <ConnectButton showBalance={false}/>
-
+        <div className='flex md:order-2 items-center'>
+          <ConnectButton showBalance={false}   />
+          {isConnected && (
+            <Link href='/myspace'>
+              <div className='flex items-center justify-between space-x-1 ml-5 bg-black h-{64px} p-1 rounded-lg border border-black px-3'>
+                <Image
+                  src='/clover.svg'
+                  width={30}
+                  height={30}
+                  alt='token logo'
+                />
+                <div>60</div>
+              </div>
+            </Link>
+          )}
           <button
             data-collapse-toggle='navbar-sticky'
             type='button'
@@ -53,7 +71,9 @@ const Navbar = () => {
             <li>
               <Link
                 href='/'
-                className={`block py-2 pl-3 pr-4 ${path == "/" ? "text-blue-400" : "text-white"} bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
+                className={`block py-2 pl-3 pr-4 ${
+                  path == '/' ? 'text-blue-400' : 'text-white'
+                } bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
                 aria-current='page'
               >
                 Home
@@ -62,7 +82,9 @@ const Navbar = () => {
             <li>
               <Link
                 href='/jobs'
-                className={`block py-2 pl-3 pr-4 ${path == "/jobs" ? "text-blue-400" : "text-white"} bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
+                className={`block py-2 pl-3 pr-4 ${
+                  path == '/jobs' ? 'text-blue-400' : 'text-white'
+                } bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
               >
                 Jobs
               </Link>
@@ -70,7 +92,9 @@ const Navbar = () => {
             <li>
               <Link
                 href='/create'
-                className={`block py-2 pl-3 pr-4 ${path == "/create" ? "text-blue-400" : "text-white"} bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
+                className={`block py-2 pl-3 pr-4 ${
+                  path == '/create' ? 'text-blue-400' : 'text-white'
+                } bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
                 aria-current='page'
               >
                 Create Job
@@ -79,7 +103,9 @@ const Navbar = () => {
             <li>
               <Link
                 href='/myspace'
-                className={`block py-2 pl-3 pr-4 ${path == "/myspace" ? "text-blue-400" : "text-white"} bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
+                className={`block py-2 pl-3 pr-4 ${
+                  path == '/myspace' ? 'text-blue-400' : 'text-white'
+                } bg-blue-400 rounded md:bg-transparent md:p-0 md:hover:text-blue-400 active:text-blue-400`}
                 aria-current='page'
               >
                 My Space

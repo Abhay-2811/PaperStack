@@ -1,7 +1,7 @@
 import Link from 'next/link'
 const Myspace_auditor = props => {
   return (
-    <div className='flex flex-col text-lg h-max mb-10 space-y-4 item-center bg-gray-800 border shadow-lg shadow-blue-400 border-gray-700 p-6 m-6 rounded-md w-4/5 right-3/4'>
+    <div className='flex flex-col text-lg h-max mb-10 space-y-4 item-center bg-gray-800 border shadow-lg shadow-blue-400 border-gray-700 p-6 m-6 rounded-md  right-3/4'>
       <h1 className='text-2xl'>Auditor</h1>
       <hr class="h-px my-5 border-0 bg-blue-400"></hr>
       <h1>

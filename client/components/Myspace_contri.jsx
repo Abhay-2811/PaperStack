@@ -23,7 +23,7 @@ const fetchDataWithId = async contract_add => {
 const Myspace_contri = async props => {
   const dao_data = await fetchDataWithId(props.data.dao_add);
   return (
-    <div className='flex flex-col text-lg h-max mb-10 space-y-4 item-center bg-gray-800 border shadow-lg shadow-red-400 border-gray-700 p-6 m-6 rounded-md w-4/5 right-3/4'>
+    <div className='flex flex-col text-lg h-max mb-10 space-y-4 item-center bg-gray-800 border shadow-lg shadow-red-400 border-gray-700 p-6 m-6 rounded-md  right-3/4'>
       <h1 className='text-2xl'>Contributor</h1>
       <hr class='h-px my-5 border-0 bg-red-400'></hr>
       <h1>
