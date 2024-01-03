@@ -4,10 +4,11 @@ import Image from 'next/image'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { usePathname } from 'next/navigation'
 import { useAccount } from 'wagmi'
-
+import BalanceComp from './BalanceComp'
 const Navbar = () => {
   const path = usePathname()
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount();
+
   return (
     <nav className='bg-gray-900 w-full z-20 top-0 left-0 border-b border-gray-600 sticky'>
       <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
@@ -24,19 +25,9 @@ const Navbar = () => {
           </span>
         </Link>
         <div className='flex md:order-2 items-center'>
-          <ConnectButton showBalance={false}   />
+          <ConnectButton showBalance={false}  chainStatus={'icon'} />
           {isConnected && (
-            <Link href='/myspace'>
-              <div className='flex items-center justify-between space-x-1 ml-5 bg-black h-{64px} p-1 rounded-lg border border-black px-3'>
-                <Image
-                  src='/clover.svg'
-                  width={30}
-                  height={30}
-                  alt='token logo'
-                />
-                <div>60</div>
-              </div>
-            </Link>
+            <BalanceComp address={address}/>
           )}
           <button
             data-collapse-toggle='navbar-sticky'
