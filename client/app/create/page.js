@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Web3Storage } from 'web3.storage'
 import { useWalletClient } from 'wagmi'
 import { filecoinCalibration } from 'wagmi/chains'
-import { deployContract } from '../../utils/contract_interaction'
+import { deployContract, create_proposal } from '../../utils/contract_interaction'
 import Loading from '../loading'
 import { add_row_dao_data, add_row_people } from '../../utils/tableland_utils'
 
@@ -19,10 +19,9 @@ const Create = () => {
     })
     wc = walletClient
   }
-  const [loading, setLoading] = useState({bool: false, text: ''});
-  const [alldone, setAlldone] = useState(false);
-  
-  
+  const [loading, setLoading] = useState({ bool: false, text: '' })
+  const [alldone, setAlldone] = useState(false)
+
   const api_key = process.env.NEXT_PUBLIC_WEB3_API
   const [formData, setFormData] = useState({
     orgName: '',
@@ -38,46 +37,54 @@ const Create = () => {
   }
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    setLoading({bool: true, text: 'generating cid...'})
+    e.preventDefault()
+    setLoading({ bool: true, text: 'generating cid...' })
     const client = new Web3Storage({ token: api_key })
-    const cid = await client.put(pages);
+    const cid = await client.put(pages)
     const auditorsArray = JSON.parse(formData.auditors)
-    setLoading({bool: true, text: 'deploying contract...'})
+    setLoading({ bool: true, text: 'deploying contract...' })
     await deployContract(
       JSON.parse(formData.auditors),
       formData.reward,
       formData.pages,
       cid,
       wc
-    ).then(async(dao_contract_add) => {
-      setLoading({bool: true, text: 'updating tables...'})
-      await add_row_dao_data(formData.orgName, formData.desc, wc.account.address, formData.reward, formData.pages, dao_contract_add);
-      await add_row_people(dao_contract_add,wc.account.address,'owner');
-      await add_row_people(dao_contract_add,auditorsArray[0],'auditor');
-      await add_row_people(dao_contract_add,auditorsArray[1],'auditor');
-      setAlldone(true);
-      setLoading({bool: false, text: ''})
+    ).then(async dao_contract_add => {
+      setLoading({ bool: true, text: 'updating tables...' })
+      await add_row_dao_data(
+        formData.orgName,
+        formData.desc,
+        wc.account.address,
+        formData.reward,
+        formData.pages,
+        dao_contract_add
+      )
+      await add_row_people(dao_contract_add, wc.account.address, 'owner')
+      // await add_row_people(dao_contract_add, auditorsArray[0], 'auditor')
+      // await add_row_people(dao_contract_add, auditorsArray[1], 'auditor')
+      setLoading({ bool: true, text: 'creating proposal....' })
+      await create_proposal(formData.desc, dao_contract_add, wc);
+      setAlldone(true)
+      setLoading({ bool: false, text: '' })
     })
   }
   const [pages, setPages] = useState([])
 
-  if(alldone){
-    return(
+  if (alldone) {
+    return (
       <div className='flex flex-col space-y-10 ml-[10%] mt-[10%] content-center align-middle '>
-      <h1 className='text-5xl font-bold text-blue-400 content-center'>
-      DAO contract has been successfully deployed 🎉
-      </h1>
-      <p>
-        Note: Data would reflect on jobs page in few minutes due to on-chain table updation.
-      </p>
-    </div>
+        <h1 className='text-5xl font-bold text-blue-400 content-center'>
+          DAO contract has been successfully deployed 🎉
+        </h1>
+        <p>
+          Note: Data would reflect on jobs page in few minutes due to on-chain
+          table updation.
+        </p>
+      </div>
     )
   }
-  if (loading.bool){
-    return (
-      <Loading text={loading.text}/>
-    )
+  if (loading.bool) {
+    return <Loading text={loading.text} />
   }
   return (
     <form className='ml-40 mr-40 mt-24 dark' onSubmit={handleSubmit}>
@@ -186,14 +193,15 @@ const Create = () => {
         <ImagesUpload setPages={pages => setPages(pages)} />
       </div>
       <div
-      class='p-4 mb-4 text-sm text-green-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-green-400 w-max'
-      role='alert'
-    >
-      <span class='font-medium'>
-        <b>Note: </b>
-      </span>{' '}
-      On acceptance of the proposal, 10 PST Tokens will be minted to your address. Thus increasing your voting power in PaperStack DAO
-    </div>
+        class='p-4 mb-4 text-sm text-green-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-green-400 w-max'
+        role='alert'
+      >
+        <span class='font-medium'>
+          <b>Note: </b>
+        </span>{' '}
+        On acceptance of the proposal, 10 PST Tokens will be minted to your
+        address. Thus increasing your voting power in PaperStack DAO
+      </div>
 
       <button
         className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'

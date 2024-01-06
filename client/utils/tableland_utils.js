@@ -60,6 +60,10 @@ export const add_row_people = async (dao_add, user_add, role) => {
   console.log('Added people')
 }
 
+export const add_row_dao_proposals = async()=>{
+  
+}
+
 export const get_dao_data = async () => {
   let headersList = {
     Accept: '*/*'

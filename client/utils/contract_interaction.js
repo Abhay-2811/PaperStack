@@ -1,4 +1,4 @@
-import { ContractData } from './contract_data';
+import { ContractData, gov_contract } from './contract_data';
 import { publicClient } from './viemClient';
 import {parseUnits, parseEther} from 'viem'
 
@@ -51,4 +51,17 @@ export const get_cid = async(contractAdd)=>{
     });
     console.log(cid);
     return cid;
+}
+
+export const create_proposal = async(description, contractAdd, walletClient)=>{
+    const [account] = await walletClient.getAddresses();
+    const { request } = await publicClient.simulateContract({
+        account,
+        address: gov_contract.address,
+        abi: gov_contract.abi,
+        functionName: 'createProposal',
+        args: [description,contractAdd],
+      })
+      const hash = await walletClient.writeContract(request);
+      await publicClient.waitForTransactionReceipt({ hash });
 }

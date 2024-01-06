@@ -24,7 +24,7 @@ const Navbar = () => {
             PaperStack
           </span>
         </Link>
-        <div className='flex md:order-2 items-center'>
+        <div className='flex md:order-2 items-center font-bold'>
           <ConnectButton showBalance={false}  chainStatus={'icon'} />
           {isConnected && (
             <BalanceComp address={address}/>
