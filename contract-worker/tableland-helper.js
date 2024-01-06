@@ -52,4 +52,8 @@ const add_row_proposals = async (pID, ca, desc) => {
   console.log('Added proposal')
 }
 
+const executeProposal = async()=>{
+
+}
+
 module.exports.add_row_proposals = add_row_proposals

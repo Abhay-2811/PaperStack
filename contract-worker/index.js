@@ -33,10 +33,23 @@ async function main () {
   publicClient.watchContractEvent({
     address: contractAddress,
     abi: contract_abi,
+    eventName: 'Voted',
+    onLogs: logs => {
+      logs.map(async log => {
+        console.log(Number(log.args.inSupport))
+      })
+    }
+  })
+
+  publicClient.watchContractEvent({
+    address: contractAddress,
+    abi: contract_abi,
     eventName: 'ProposalExecuted',
     onLogs: logs => {
       logs.map(async log => {
-        console.log(log.args)
+        console.log(log.args);
+        const values = log.args;
+
         await helper.add_row_proposals(
           Number(log.args.proposalId),
           log.args.dao_address,
