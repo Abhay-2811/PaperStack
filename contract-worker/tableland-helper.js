@@ -37,23 +37,28 @@ const add_row_proposals = async (pID, ca, desc) => {
     .prepare(
       `INSERT INTO dao_proposals_314159_680 (proposalId, contractAdd, description, proposalPassed) VALUES (?, ?, ?, ?);`
     )
-    .bind(
-      pID,
-      ca,
-      desc,
-      2
-    )
+    .bind(pID, ca, desc, 2)
     .run()
 
   // Wait for transaction finality
   const hash = insert.txn.transactionHash
-  console.log(hash);
+  console.log(hash)
   await publicClient.waitForTransactionReceipt({ hash })
   console.log('Added proposal')
 }
 
-const executeProposal = async()=>{
-
+// to execute proposal, update proposalPassed Column and change main table of jobs [i.e include it in ecosystem]
+const executeProposal = async (proposalId, proposalPassed) => {
+  const {meta: update} = await db
+    .prepare(
+      'UPDATE dao_proposals_314159_680 SET proposalPassed=? WHERE proposalId=?'
+    )
+    .bind(proposalPassed, proposalId)
+    .run();
+  // Wait for transaction finality
+  const hash = update.txn.transactionHash
+  console.log(hash)
+  await publicClient.waitForTransactionReceipt({ hash })
 }
 
-module.exports.add_row_proposals = add_row_proposals
+module.exports.helper = {add_row_proposals, executeProposal}

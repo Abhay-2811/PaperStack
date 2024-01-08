@@ -50,6 +50,8 @@ const Create = () => {
       cid,
       wc
     ).then(async dao_contract_add => {
+      setLoading({ bool: true, text: 'creating proposal....' })
+      await create_proposal(formData.desc, dao_contract_add, wc);
       setLoading({ bool: true, text: 'updating tables...' })
       await add_row_dao_data(
         formData.orgName,
@@ -60,10 +62,6 @@ const Create = () => {
         dao_contract_add
       )
       await add_row_people(dao_contract_add, wc.account.address, 'owner')
-      // await add_row_people(dao_contract_add, auditorsArray[0], 'auditor')
-      // await add_row_people(dao_contract_add, auditorsArray[1], 'auditor')
-      setLoading({ bool: true, text: 'creating proposal....' })
-      await create_proposal(formData.desc, dao_contract_add, wc);
       setAlldone(true)
       setLoading({ bool: false, text: '' })
     })
