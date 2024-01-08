@@ -35,7 +35,7 @@ async function createTable () {
 const add_row_proposals = async (pID, ca, desc) => {
   const { meta: insert } = await db
     .prepare(
-      `INSERT INTO dao_proposals_314159_680 (proposalId, contractAdd, description, proposalPassed) VALUES (?, ?, ?, ?);`
+      `INSERT INTO dao_proposals_314159_680 (proposalId, contractAdd, des, proposalPassed) VALUES (?, ?, ?, ?);`
     )
     .bind(pID, ca, desc, 2)
     .run()
