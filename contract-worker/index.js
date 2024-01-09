@@ -3,8 +3,18 @@ const chains = require('viem/chains')
 const contractAbi = require('./gov_contract.json')
 require('dotenv').config()
 const { helper } = require('./tableland-helper')
+const express = require('express')
+const cors = require('cors')
+const app = express()
 
-async function main () {
+app.use(cors())
+
+app.use(express.json())
+
+const PORT = process.env.PORT || 8000
+
+app.listen(PORT, async () => {
+  console.log('Listening at PORT: ', PORT)
   const contractAddress = contractAbi.address
   const contract_abi = contractAbi.abi
   const publicClient = viem.createPublicClient({
@@ -43,9 +53,7 @@ async function main () {
       })
     }
   })
-}
-
-main()
+})
 
 /* logs example: args: { proposalId: 4n, description: 'Something', dao_address: 0xa... },
  */

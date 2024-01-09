@@ -7,6 +7,7 @@ import Myspace_contri from '@/components/Myspace_contri'
 import Myspace_owner from '@/components/Myspace_owner'
 import { Tabs, Tab } from '@nextui-org/tabs'
 import ProposalCard from '@/components/ProposalCard'
+import { useAccount } from 'wagmi'
 
 const fetchDataWithAdd = async address => {
   let headersList = {
@@ -49,6 +50,7 @@ const fetchProposalData = async () => {
 }
 
 const myspace = async () => {
+  const { isConnected, address } = useAccount()
   let wc
   if (typeof window !== 'undefined') {
     const { data: walletClient } = useWalletClient({
@@ -62,34 +64,45 @@ const myspace = async () => {
 
   const data = await fetchDataWithAdd(wc?.account.address)
   const proposalData = await fetchProposalData()
+
   return (
     <div className='flex flex-col items-center'>
-      <Tabs aria-label='options' className='dark w-[60%] mt-8' fullWidth={true}>
-        <Tab key='proposals' title='Proposals'>
+      <Tabs aria-label='options' className='dark w-[50%] mt-8' fullWidth={true}>
+        <Tab
+          key='proposals'
+          title='Proposals'
+          className='w-screen items-center'
+        >
           {proposalData?.map((data, index) => (
-            <div className='mt-20'>
-              <ProposalCard data={data} key={index} />
+            <div className=' ml-40 mt-20 w-[80%]'>
+              {isConnected ? (
+                <ProposalCard data={data} key={index} address={address} />
+              ) : (
+                <>Wallet Not Connected</>
+              )}
             </div>
           ))}
         </Tab>
-        <Tab key='daos' title='Dao Involvements'>
-          <div className=' mt-20'>
-            {data.map((value, index) => (
-              <div key={index}>
-                {value.role == 'owner' ? <Myspace_owner data={value} /> : <></>}
-                {value.role == 'auditor' ? (
-                  <Myspace_auditor data={value} />
-                ) : (
-                  <></>
-                )}
-                {value.role == 'contributor' ? (
-                  <Myspace_contri data={value} />
-                ) : (
-                  <></>
-                )}
-              </div>
-            ))}
-          </div>
+        <Tab
+          key='daos'
+          title='Dao Involvements'
+          className='w-screen items-center overflow-clip'
+        >
+          {data.map((value, index) => (
+            <div key={index} className='ml-40 mt-20 w-[80%]'>
+              {value.role == 'owner' ? <Myspace_owner data={value} /> : <></>}
+              {value.role == 'auditor' ? (
+                <Myspace_auditor data={value} />
+              ) : (
+                <></>
+              )}
+              {value.role == 'contributor' ? (
+                <Myspace_contri data={value} />
+              ) : (
+                <></>
+              )}
+            </div>
+          ))}
         </Tab>
       </Tabs>
     </div>

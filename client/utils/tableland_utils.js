@@ -41,10 +41,11 @@ export const add_row_dao_data = async (
     .bind(org_name, owner_add, desc, reward, pages, contract_add)
     .run()
   const hash = insert.txn.transactionHash
-  console.log(hash);
+  console.log(hash)
   await publicClient.waitForTransactionReceipt({ hash })
   console.log('Added to dao data')
 }
+
 
 export const add_row_people = async (dao_add, user_add, role) => {
   const signer = get_pk_walletClient()
@@ -58,10 +59,6 @@ export const add_row_people = async (dao_add, user_add, role) => {
   const hash = insert.txn.transactionHash
   await publicClient.waitForTransactionReceipt({ hash })
   console.log('Added people')
-}
-
-export const add_row_dao_proposals = async()=>{
-  
 }
 
 export const get_dao_data = async () => {
