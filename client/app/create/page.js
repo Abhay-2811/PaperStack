@@ -7,6 +7,7 @@ import { filecoinCalibration } from 'wagmi/chains'
 import { deployContract, create_proposal } from '../../utils/contract_interaction'
 import Loading from '../loading'
 import { add_row_dao_data, add_row_people } from '../../utils/tableland_utils'
+import Link from 'next/link'
 
 const Create = () => {
   let wc
@@ -72,11 +73,10 @@ const Create = () => {
     return (
       <div className='flex flex-col space-y-10 ml-[10%] mt-[10%] content-center align-middle '>
         <h1 className='text-5xl font-bold text-blue-400 content-center'>
-          DAO contract has been successfully deployed 🎉
+          Proposal For Inclusion of You DAO has been created 🎉 <Link href='/myspace'>View proposal</Link>
         </h1>
         <p>
-          Note: Data would reflect on jobs page in few minutes due to on-chain
-          table updation.
+          Note: The PST token holders will vote and based on outcome your DAO/Job may or may-not be added to our platform.
         </p>
       </div>
     )
